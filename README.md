@@ -1,0 +1,2 @@
+# CISC-Black-Jack
+Group of 4 making a black Jack game in GitHub/Java
