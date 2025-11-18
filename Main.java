@@ -1,3 +1,4 @@
+// It's in the debug menu
 import java.util.Scanner;
 public class Main
 {
