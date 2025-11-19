@@ -29,7 +29,7 @@ public class Main
 	ArrayList shuffledNumberDeck;
 
 	public static void main(String[] args) {
-		int chips = 100;
+		int chips = 1000;
 		System.out.println("Welcome! This is CISC-Black-Jack");
 		Scanner input = new Scanner(System.in);
 
