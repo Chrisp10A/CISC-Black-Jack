@@ -1,5 +1,5 @@
 // It's in the debug menu
-import java.util.Scanner;
+import java.util.*;
 public class Main
 {
 	// Declare Variables
@@ -16,7 +16,17 @@ public class Main
 	boolean hasInsurance;
 	boolean DealerHasAce;
 	String activeDealerCards;
-	
+	// Used in "createDeck"
+	int createSuit;
+	int createCardNumber;
+	// Lists used in "createDeck"
+	ArrayList<String> suitDeck;
+	ArrayList numberDeck;
+	// Used in "shuffleDeck"
+	int randomCard;
+	// Lists used in "shuffleDeck"
+	ArrayList<String> shuffledSuitDeck;
+	ArrayList shuffledNumberDeck;
 
 	public static void main(String[] args) {
 		int chips = 100;
@@ -56,5 +66,29 @@ public class Main
 		DealerHasAce = false;
 		totalDealerCards = 0;
 		activeDealerCards = null;
+		createDeck();
+	}
+	
+	public void createDeck() {
+		suitDeck = new ArrayList<String>();
+		numberDeck = new ArrayList();
+		createSuit = 1;
+		for (int a = 0; a < 4; a++) {
+			createCardNumber = 1;
+			for (int b = 0; b < 13; b++) {
+			createCardNumber = createCardNumber++;
+			numberDeck.add(b);
+			suitDeck.add("" + finalSuits.charAt(a));
+			}
+		}
+		shuffleDeck();
+
+	}
+	public void shuffleDeck(){
+		Random random = new Random();
+		for (int a = numberDeck.size(); a == 0; a--) {
+			randomCard = random.nextInt(a);
+			// Add more later :P
+		}
 	}
 }
