@@ -58,7 +58,6 @@ public class Main
 
 	public void reset()
 	{
-		System.out.print("reset");
 		totalAces = 0;
 		totalPlayer = 0;
 		totalDealerAces = 0;
