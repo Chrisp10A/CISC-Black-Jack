@@ -1,4 +1,5 @@
 // It's in the debug menu
+import java.awt.font.NumericShaper;
 import java.util.*;
 public class Main
 {
@@ -27,7 +28,6 @@ public class Main
 	// Lists used in "shuffleDeck"
 	ArrayList<String> shuffledSuitDeck;
 	ArrayList shuffledNumberDeck;
-
 	public static void main(String[] args) {
 		int chips = 1000;
 		System.out.println("Welcome! This is CISC-Black-Jack");
@@ -52,6 +52,7 @@ public class Main
 		// GAME LOOP
 		Main MainInstance = new Main();
 		MainInstance.reset();
+		MainInstance.newRound();
 		
 		input.close();
 	}
@@ -87,7 +88,29 @@ public class Main
 		Random random = new Random();
 		for (int a = numberDeck.size(); a == 0; a--) {
 			randomCard = random.nextInt(a);
-			// Add more later :P
+			shuffledNumberDeck.add(numberDeck.get(randomCard));
+			shuffledSuitDeck.add(suitDeck.get(randomCard));
+			numberDeck.remove(a);
+			suitDeck.remove(a);
 		}
+	}
+	public void newRound(){
+		intialDraw();
+		}
+	public void intialDraw(){
+		System.out.print("The Dealer draws: ");
+		dealerDrawsCard();
+		dealerDrawsCard();
+		System.out.print("The Player draws: ");
+		playerDrawsCard();
+		playerDrawsCard();
+		System.out.print("Total: " + totalPlayer);
+
+	}
+	public void dealerDrawsCard(){
+		// Yo
+	}
+	public void playerDrawsCard(){
+		// Add stuff pls?
 	}
 }
