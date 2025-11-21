@@ -86,7 +86,7 @@ public class Main
 	}
 	public void shuffleDeck(){
 		Random random = new Random();
-		for (int a = numberDeck.size(); a == 0; a--) {
+		for (int a = numberDeck.size(); a >= 0; a--) {
 			randomCard = random.nextInt(a);
 			shuffledNumberDeck.add(numberDeck.get(randomCard));
 			shuffledSuitDeck.add(suitDeck.get(randomCard));
@@ -108,7 +108,7 @@ public class Main
 
 	}
 	public void dealerDrawsCard(){
-		// Yo
+
 	}
 	public void playerDrawsCard(){
 		// Add stuff pls?
