@@ -6,8 +6,6 @@ public class Main
 	// Final
 	final String finalSuits = "♤♡♧♢";
 	final String finalFaceCardNames = "JQKA";
-	// Other
-	int activeCardNumber;
 	// Reset
 	int totalAces;
 	int totalPlayer;
@@ -29,7 +27,11 @@ public class Main
 	// Lists used in "shuffleDeck"
 	ArrayList<String> shuffledSuitDeck;
 	ArrayList<Integer> shuffledNumberDeck;
-	public static void main(String[] args) {
+	// Used in "playerDrawCard" and "dealerDrawsCard"
+	int activeCardNumber;
+	String activeCard;
+
+	public static void main(String[] args){
 		int chips = 1000;
 		System.out.println("Welcome! This is CISC-Black-Jack");
 		Scanner input = new Scanner(System.in);
@@ -73,7 +75,7 @@ public class Main
 		createDeck();
 	}
 	
-	public void createDeck() {
+	public void createDeck(){
 		suitDeck = new ArrayList<>();
 		numberDeck = new ArrayList<>();
 		createSuit = 1;
@@ -86,8 +88,8 @@ public class Main
 			}
 		}
 		shuffleDeck();
-
 	}
+
 	public void shuffleDeck(){
 		shuffledSuitDeck = new ArrayList<>();
 		shuffledNumberDeck = new ArrayList<>();
@@ -104,22 +106,107 @@ public class Main
 			suitDeck.remove(randomCard);
 		}
 	}
+
 	public void newRound(){
 		intialDraw();
 		}
+	
 	public void intialDraw(){
 		System.out.print("The Dealer draws: ");
 		dealerDrawsCard();
 		dealerDrawsCard();
+		System.out.println("");
 		System.out.print("The Player draws: ");
 		playerDrawsCard();
 		playerDrawsCard();
 		System.out.print("Total: " + totalPlayer);
 	}
+
 	public void dealerDrawsCard(){
-		// Yo
+		// Yo, pls make this an abstract method maybe?
+		activeCardNumber = shuffledNumberDeck.get(0);
+		totalDealerCards = totalDealerCards + 1;
+		if (activeCardNumber < 11){
+			totalDealer = (totalDealer + activeCardNumber);
+		}
+		else {
+			if (activeCardNumber == 14) {
+				if (totalDealerCards == 2){
+					DealerHasAce = true;
+				}
+				totalDealer = (totalDealer + 11);
+				if (21 < totalDealer) {
+					totalDealer = (totalDealer - 10);
+				}
+				else {
+					totalDealerAces = (totalDealerAces + 1);
+				}
+			}
+			else {
+				totalDealer = (totalDealer + 10);
+			}
+		}
+		if ((21 < totalDealer) && (totalAces < 0)){
+			totalPlayer = (totalPlayer - 10);
+			totalAces = (totalAces - 1);
+		}
+		if (totalDealerCards == 1){
+			System.out.print("XX ");
+		}
+		convertCardToString();
+		printDrawCards(true);
+		deleteCard();
 	}
+
 	public void playerDrawsCard(){
-		// Add stuff pls? 
+		activeCardNumber = shuffledNumberDeck.get(0);
+		if (activeCardNumber < 11){
+			totalPlayer = (totalPlayer + activeCardNumber);
+		}
+		else {
+			if (activeCardNumber == 14) {
+				totalPlayer = (totalPlayer + 11);
+				if (21 < totalPlayer) {
+					totalPlayer = (totalPlayer - 10);
+				}
+				else {
+					totalAces = (totalAces + 1);
+				}
+			}
+			else {
+				totalPlayer = (totalPlayer + 10);
+			}
+		}
+		if ((21 < totalPlayer) && (totalAces < 0)) {
+			totalPlayer = (totalPlayer - 10);
+			totalAces = (totalAces - 1);
+		}
+		convertCardToString();
+		printDrawCards(false);
+		deleteCard();
+	}
+
+	public void convertCardToString(){
+		if (activeCardNumber < 11) {
+			activeCard = ("" + activeCardNumber);
+		}
+		else {
+			activeCard = "" + finalFaceCardNames.charAt(activeCardNumber - 10);
+		}
+	}
+
+	public void printDrawCards(boolean isDealer){
+		activeCard = ("" + activeCard + shuffledSuitDeck.get(0) + " ");
+		if ((!isDealer) || (1 != totalDealerCards)) {
+			System.out.print(activeCard);
+		}
+		if (isDealer){
+			activeDealerCards = (activeDealerCards + activeCard);
+		}
+	}
+
+	public void deleteCard(){
+		shuffledNumberDeck.remove(0);
+		shuffledSuitDeck.remove(0);
 	}
 }
