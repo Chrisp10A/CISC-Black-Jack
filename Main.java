@@ -6,6 +6,8 @@ public class Main
 	// Final
 	final String finalSuits = "♤♡♧♢";
 	final String finalFaceCardNames = "JQKA";
+	// Other
+	int activeCardNumber;
 	// Reset
 	int totalAces;
 	int totalPlayer;
@@ -21,23 +23,24 @@ public class Main
 	int createCardNumber;
 	// Lists used in "createDeck"
 	ArrayList<String> suitDeck;
-	ArrayList numberDeck;
+	ArrayList<Integer> numberDeck;
 	// Used in "shuffleDeck"
 	int randomCard;
 	// Lists used in "shuffleDeck"
 	ArrayList<String> shuffledSuitDeck;
-	ArrayList shuffledNumberDeck;
+	ArrayList<Integer> shuffledNumberDeck;
 	public static void main(String[] args) {
 		int chips = 1000;
 		System.out.println("Welcome! This is CISC-Black-Jack");
 		Scanner input = new Scanner(System.in);
+		/*
 
         // Ask for the user's name
         System.out.print("Enter your name: ");
         String name = input.nextLine();
-        System.out.print("");
+        System.out.println("");
 		System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
-		System.out.print("Type 'Y' for yes and 'N' for No");
+		System.out.println("Type 'Y' for yes and 'N' for No");
 		String answer = input.nextLine();
 		// Should probably use case stuff
 		if (answer.equals("Y")) {
@@ -46,13 +49,15 @@ public class Main
 		else {
 			System.out.println("Aw man :(");
 		}
+		*/
 		// stops
 		System.out.println("Starting Game...");
 		// GAME LOOP
 		Main MainInstance = new Main();
 		MainInstance.reset();
 		MainInstance.newRound();
-		
+		System.out.println("");
+		System.out.println("Finished");
 		input.close();
 	}
 
@@ -69,12 +74,12 @@ public class Main
 	}
 	
 	public void createDeck() {
-		suitDeck = new ArrayList<String>();
-		numberDeck = new ArrayList();
+		suitDeck = new ArrayList<>();
+		numberDeck = new ArrayList<>();
 		createSuit = 1;
-		for (int a = 0; a < 4; a++) {
+		for (int a = 0; a < 1; a++) {
 			createCardNumber = 1;
-			for (int b = 0; b < 13; b++) {
+			for (int b = 2; b <= 14; b++) {
 			createCardNumber = createCardNumber++;
 			numberDeck.add(b);
 			suitDeck.add("" + finalSuits.charAt(a));
@@ -84,13 +89,19 @@ public class Main
 
 	}
 	public void shuffleDeck(){
+		shuffledSuitDeck = new ArrayList<>();
+		shuffledNumberDeck = new ArrayList<>();
 		Random random = new Random();
-		for (int a = numberDeck.size(); a >= 0; a--) {
-			randomCard = random.nextInt(a);
+		for (int a = numberDeck.size() - 1; a >= 0; a--) {
+			try {
+				randomCard = random.nextInt(a);
+			} catch (Exception e) {
+				randomCard = 0;
+			}
 			shuffledNumberDeck.add(numberDeck.get(randomCard));
 			shuffledSuitDeck.add(suitDeck.get(randomCard));
-			numberDeck.remove(a);
-			suitDeck.remove(a);
+			numberDeck.remove(randomCard);
+			suitDeck.remove(randomCard);
 		}
 	}
 	public void newRound(){
@@ -104,10 +115,9 @@ public class Main
 		playerDrawsCard();
 		playerDrawsCard();
 		System.out.print("Total: " + totalPlayer);
-
 	}
 	public void dealerDrawsCard(){
-		//Yo
+		// Yo
 	}
 	public void playerDrawsCard(){
 		// Add stuff pls? 
