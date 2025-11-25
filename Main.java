@@ -13,6 +13,7 @@ public class Main
 	int totalDealerAces;
 	int totalDealerHasInsurance;
 	int totalDealerCards;
+	boolean firstAction;
 	boolean hasInsurance;
 	boolean DealerHasAce;
 	String activeDealerCards;
@@ -30,9 +31,13 @@ public class Main
 	// Used in "playerDrawCard" and "dealerDrawsCard"
 	int activeCardNumber;
 	String activeCard;
+	// Used in "newRound"
+	int totalChips = 100;
+	int inputInt;
+	int betChips;
+	char inputChar;
 
 	public static void main(String[] args){
-		int chips = 1000;
 		System.out.println("Welcome! This is CISC-Black-Jack");
 		Scanner input = new Scanner(System.in);
 		/*
@@ -56,22 +61,38 @@ public class Main
 		System.out.println("Starting Game...");
 		// GAME LOOP
 		Main MainInstance = new Main();
+		while (true) {
 		MainInstance.reset();
 		MainInstance.newRound();
 		System.out.println("");
-		System.out.println("Finished");
-		input.close();
+		if (MainInstance.checkLose()) {
+			System.out.println("Game Over! You ran out of chips");
+			System.exit(0);
+		}
+		System.out.println("Next round!");
+		}
+	}
+
+	public boolean checkLose(){
+		if (totalChips == 0) {
+			return (true);
+		}
+		else {
+			return (false);
+		}
 	}
 
 	public void reset()
 	{
 		totalAces = 0;
 		totalPlayer = 0;
+		totalDealer = 0;
 		totalDealerAces = 0;
+		firstAction = true;
 		hasInsurance = false;
 		DealerHasAce = false;
 		totalDealerCards = 0;
-		activeDealerCards = null;
+		activeDealerCards = "";
 		createDeck();
 	}
 	
@@ -79,7 +100,7 @@ public class Main
 		suitDeck = new ArrayList<>();
 		numberDeck = new ArrayList<>();
 		createSuit = 1;
-		for (int a = 0; a < 1; a++) {
+		for (int a = 0; a < 4; a++) {
 			createCardNumber = 1;
 			for (int b = 2; b <= 14; b++) {
 			createCardNumber = createCardNumber++;
@@ -108,21 +129,36 @@ public class Main
 	}
 
 	public void newRound(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("");
+		System.out.println("How many chips are you betting? You have: " + totalChips + " chips");
+		do { 
+			inputInt = input.nextInt();
+		} while ((0 > inputInt) || (inputInt > totalChips));
+		
 		intialDraw();
+		if ((totalDealer == 21) || (totalPlayer == 21)){
+			HasBlackjack();
+		}
+		else {
+			startRound();
+		}
 		}
 	
 	public void intialDraw(){
+		System.out.println("You bet " + inputInt);
+		betChips = inputInt;
 		System.out.print("The Dealer draws: ");
-		dealerDrawsCard();
-		dealerDrawsCard();
+		dealerDrawCard();
+		dealerDrawCard();
 		System.out.println("");
 		System.out.print("The Player draws: ");
-		playerDrawsCard();
-		playerDrawsCard();
+		playerDrawCard();
+		playerDrawCard();
 		System.out.print("Total: " + totalPlayer);
 	}
 
-	public void dealerDrawsCard(){
+	public void dealerDrawCard(){
 		// Yo, pls make this an abstract method maybe?
 		activeCardNumber = shuffledNumberDeck.get(0);
 		totalDealerCards = totalDealerCards + 1;
@@ -137,6 +173,7 @@ public class Main
 				totalDealer = (totalDealer + 11);
 				if (21 < totalDealer) {
 					totalDealer = (totalDealer - 10);
+
 				}
 				else {
 					totalDealerAces = (totalDealerAces + 1);
@@ -146,9 +183,9 @@ public class Main
 				totalDealer = (totalDealer + 10);
 			}
 		}
-		if ((21 < totalDealer) && (totalAces < 0)){
-			totalPlayer = (totalPlayer - 10);
-			totalAces = (totalAces - 1);
+		if ((21 < totalDealer) && (totalDealerAces > 0)){
+			totalDealer = (totalDealer - 10);
+			totalDealerAces = (totalDealerAces - 1);
 		}
 		if (totalDealerCards == 1){
 			System.out.print("XX ");
@@ -158,7 +195,7 @@ public class Main
 		deleteCard();
 	}
 
-	public void playerDrawsCard(){
+	public void playerDrawCard(){
 		activeCardNumber = shuffledNumberDeck.get(0);
 		if (activeCardNumber < 11){
 			totalPlayer = (totalPlayer + activeCardNumber);
@@ -177,7 +214,7 @@ public class Main
 				totalPlayer = (totalPlayer + 10);
 			}
 		}
-		if ((21 < totalPlayer) && (totalAces < 0)) {
+		if ((21 < totalPlayer) && (totalAces > 0)) {
 			totalPlayer = (totalPlayer - 10);
 			totalAces = (totalAces - 1);
 		}
@@ -191,7 +228,7 @@ public class Main
 			activeCard = ("" + activeCardNumber);
 		}
 		else {
-			activeCard = "" + finalFaceCardNames.charAt(activeCardNumber - 10);
+			activeCard = "" + finalFaceCardNames.charAt(activeCardNumber - 11);
 		}
 	}
 
@@ -208,5 +245,121 @@ public class Main
 	public void deleteCard(){
 		shuffledNumberDeck.remove(0);
 		shuffledSuitDeck.remove(0);
+	}
+
+	public void HasBlackjack(){
+		// Uhhhh say things when Blackjack happens.
+	}
+
+	public void startRound(){
+		Scanner input = new Scanner(System.in);
+		do { 
+			System.out.println("");
+			if ((betChips * 2 <= totalChips) && (firstAction)) {
+				System.out.println("Do you Hit (H), Stand (S), or Double Down (D)?");
+				firstAction = false;
+			}
+			else {
+				System.out.println("Do you Hit (H) or Stand (S)?");
+			}
+			do { 
+				inputChar = input.next().charAt(0);
+			} while (!((inputChar == 'H') || (inputChar == 'S') || ((inputChar == 'D') && (betChips * 2 <= totalChips))));
+			checkHit();
+		} while (!((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer)));
+		endRound();
+	}
+
+	public void checkHit(){
+		if (inputChar == 'D') {
+			betChips = betChips * 2;
+			System.out.println("Double Down! Bet raised to " + (betChips));
+			hit();
+		}
+		if (inputChar == 'H') {
+			hit();
+		}
+	}
+
+	public void endRound(){
+		// Could probably use a case statement here, maybe ._.
+		if (totalPlayer > 21){
+			loseBusted();
+		}
+		else {
+			System.out.println("");
+			System.out.print("Stand Total: " + (totalPlayer));
+			if (totalPlayer == 21) {
+				System.out.println("!");
+			}
+			else {
+				System.out.println("");
+			}
+			dealerPlay();
+			if (21 < totalDealer) {
+				winRound();
+			}
+			else {
+				if (totalDealer == totalPlayer) {
+					tieRound();
+				}
+				else {
+					if (totalDealer < totalPlayer) {
+						winRound();
+					}
+					else {
+						loseRound();
+					}
+				}
+			}
+		}
+	}
+
+	public void hit(){
+		System.out.println("Hit! ");
+		playerDrawCard();
+		System.out.println("Total " + totalPlayer);
+	}
+
+	public void dealerPlay(){
+		System.out.println("The Dealer has " + activeDealerCards + " Total: " + totalDealer);
+		while (totalDealer < 17) {
+			System.out.println("");
+			System.out.println("The Dealer draws: ");
+			dealerDrawCard();
+			System.out.print("Total: " + totalDealer);
+		}
+	}
+
+	public void loseBusted(){
+		System.out.println("");
+		System.out.println("Busted. " + totalPlayer + " is over 21");
+		totalChips = totalChips - betChips;
+		System.out.println("You lost " + betChips + " chips");
+	}
+
+	public void winRound(){
+		totalChips = totalChips + betChips;
+		System.out.println("");
+		if (21 < totalDealer) {
+			System.out.println("Busted " + totalDealer + " is over 21.");
+			System.out.println("Win! You had " + totalPlayer + " while the Dealer busted!");
+		}
+		else {
+			System.out.println("Win! You had " + totalPlayer + " while the dealer had " + totalDealer);
+		}
+		System.out.println("You won " + betChips + " chips");
+	}
+
+	public void tieRound(){
+		System.out.println("Tie! Both dealer and player had " + totalPlayer);
+		System.out.println("No change");
+	}
+
+	public void loseRound(){
+		System.out.println("");
+		System.out.println("Loss. You had " + totalPlayer + " while the dealer had " + totalDealer);
+		totalChips = totalChips - betChips;
+		System.out.println("You lost " + betChips + " chips");
 	}
 }
