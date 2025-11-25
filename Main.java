@@ -248,7 +248,33 @@ public class Main
 	}
 
 	public void HasBlackjack(){
-		// Uhhhh say things when Blackjack happens.
+		if (totalPlayer == 21) {
+			System.out.println("The Player has Blackjack!");
+		}
+		dealerPlay();
+		if (totalDealer == 21) {
+			if (totalPlayer == 21) {
+				System.out.println("The Dealer also had Blackjack!");
+			}
+			else {
+				System.out.println("The Dealer has Blackjack!");
+			}			
+			if ((totalDealer == 21) && (totalPlayer == 21)) {
+				System.out.println("Stand-off. Both Player and Dealer hava a total of 21.");
+				System.out.println("No change");
+			}
+			else {
+				if (totalDealer == 21) {
+					totalChips = totalChips - betChips;
+					System.out.print("You lost " + betChips + " chips");
+				}
+				else {
+					System.out.print("Win! You had " + totalPlayer + " while the dealer had " + totalDealer);
+					System.out.print("You won " + betChips + " chips and " + (Math.floor((betChips / 2))) + " bonus chips for getting Blackjack");
+				}
+			}
+
+		}
 	}
 
 	public void startRound(){
@@ -322,6 +348,7 @@ public class Main
 	}
 
 	public void dealerPlay(){
+		System.out.println("");
 		System.out.println("The Dealer has " + activeDealerCards + " Total: " + totalDealer);
 		while (totalDealer < 17) {
 			System.out.println("");
