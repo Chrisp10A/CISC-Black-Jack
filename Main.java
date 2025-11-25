@@ -35,6 +35,7 @@ public class Main
 	int totalChips = 100;
 	int inputInt;
 	int betChips;
+	int betInsuranceChips;
 	char inputChar;
 
 	public static void main(String[] args){
@@ -148,7 +149,13 @@ public class Main
 		do { 
 			inputInt = input.nextInt();
 		} while ((0 > inputInt) || (inputInt > totalChips));
+		System.out.println("");
 		intialDraw();
+		// Insurance be like
+		if ((DealerHasAce) && ((int) (Math.floor(betChips / 2)) + betChips) <= totalChips) {
+			betInsuranceChips = (int) (Math.floor(betChips / 2));
+			dealerHasAce();
+		}
 		if ((totalDealer == 21) || (totalPlayer == 21)){
 			HasBlackjack();
 		}
@@ -158,8 +165,11 @@ public class Main
 		}
 	
 	public void intialDraw(){
-		System.out.println("You bet " + inputInt);
 		betChips = inputInt;
+		if (totalChips == betChips) {
+			System.out.print("YOU GO ALL IN! ");
+		}
+		System.out.println("You bet " + inputInt);
 		System.out.print("The Dealer draws: ");
 		dealerDrawCard();
 		dealerDrawCard();
@@ -272,15 +282,25 @@ public class Main
 			}			
 			if ((totalDealer == 21) && (totalPlayer == 21)) {
 				System.out.println("Stand-off. Both Player and Dealer hava a total of 21.");
+				if (hasInsurance) {
+					System.out.println("Insurance! You won " + betInsuranceChips + " chips");
+					totalChips = totalChips + betInsuranceChips;
+				}
+				else {
 				System.out.println("No change");
+				}
 			}
 			else {
 				if (totalDealer == 21) {
 					totalChips = totalChips - betChips;
 					System.out.println("You lost " + betChips + " chips");
+					if (hasInsurance) {
+						totalChips = totalChips + betInsuranceChips * 2;
+						System.out.println("Insurance! You won back your " + betInsuranceChips + " chips");
+					}
 				}
 				else {
-					totalChips = totalChips + betChips;
+					totalChips = totalChips + betChips + (int) ((Math.floor(betChips / 2)));
 					System.out.println("Win! You had " + totalPlayer + " while the dealer had " + totalDealer);
 					System.out.println("You won " + betChips + " chips and " + (Math.floor((betChips / 2))) + " bonus chips for getting Blackjack");
 				}
@@ -302,6 +322,7 @@ public class Main
 			do { 
 				inputChar = input.next().charAt(0);
 			} while (!((inputChar == 'H') || (inputChar == 'S') || ((inputChar == 'D') && (betChips * 2 <= totalChips))));
+			System.out.println("");
 			checkHit();
 		} while (!((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer)));
 		endRound();
@@ -393,5 +414,23 @@ public class Main
 		System.out.println("Loss. You had " + totalPlayer + " while the dealer had " + totalDealer);
 		totalChips = totalChips - betChips;
 		System.out.println("You lost " + betChips + " chips");
+	}
+
+	public void dealerHasAce(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("The Dealer has an Ace, do you wish to buy insurance? (Y/N) (" + betInsuranceChips + " chips)");
+		do { 
+				inputChar = input.next().charAt(0);
+			} while (!((inputChar == 'Y') || (inputChar == 'N')));
+		if (inputChar == 'Y') {
+			if (totalDealer == 21) {
+				hasInsurance = (true);
+			}
+			else {
+				totalChips = totalChips - betInsuranceChips;
+				System.out.println("Dealer does NOT have Blackjack");
+				System.out.println("You lost " + betInsuranceChips + " chips");
+			}
+		}
 	}
 }
