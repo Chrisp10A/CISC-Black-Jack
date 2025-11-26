@@ -26,6 +26,8 @@ public class Main
 	// Lists used in "shuffleDeck"
 	ArrayList<String> shuffledSuitDeck;
 	ArrayList<Integer> shuffledNumberDeck;
+	// Used in "intitalDraw"
+	String name;
 	// Used in "playerDrawCard" and "dealerDrawsCard"
 	int activeCardNumber;
 	String activeCard;
@@ -41,30 +43,16 @@ public class Main
 		System.out.println("Welcome! This is CISC-Black-Jack");
 		try (Scanner input = new Scanner(System.in)) {
 			// Ask for the user's name
-			System.out.print("Enter your name: ");
-			String name = input.nextLine();
-			System.out.println("");
-			System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
-			System.out.println("Type 'Y' for yes and 'N' for No");
-			String answer = input.nextLine();
-			// Should probably use case stuff
-			if (answer.equals("Y") || answer.equals("y")) {
-				System.out.println("Yay!");
-			}
-			else {
-				System.out.println("Aw man :(");
-				System.out.println("Quitting game...");
-				System.exit(0);
-			}
-		
-
+			Main MainInstance = new Main();
+			// Bypass static >:D
+			MainInstance.introForGame(input);	
       		// stops
 			System.out.println("Starting Game");
 			// GAME LOOP
-			Main MainInstance = new Main();
 			while (true) {
 			System.out.println("----------------------");
 			MainInstance.reset();
+			// Maybe something with case
 			MainInstance.newRound(input);
 			if (MainInstance.checkLose()) {
 				System.out.println("Game Over! You ran out of chips");
@@ -76,6 +64,29 @@ public class Main
 			}
 			System.out.println("Next round!");
 			}
+		}
+	}
+
+	public void introForGame(Scanner input) {
+		System.out.print("Enter your name: ");
+		name = input.nextLine();
+		System.out.println("");
+		if (name.equals("")) {
+			name = "The player";
+			System.out.println("Hello, player. Are you up for a game of Blackjack?");
+		}
+		else {
+			System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
+		}
+		System.out.print("Type 'Y' for yes: ");
+		String answer = input.nextLine();
+		if (answer.equals("Y") || answer.equals("y") || answer.equals("yes") || answer.equals("Yes")) {
+			System.out.println("Ok!");
+		}
+		else {
+			System.out.println("Aw man :(");
+			System.out.println("Quitting game...");
+			System.exit(0);
 		}
 	}
 
@@ -108,6 +119,8 @@ public class Main
 		DealerHasAce = false;
 		totalDealerCards = 0;
 		activeDealerCards = "";
+		inputInt = 0;
+		inputChar = 0;
 		createDeck();
 	}
 	
@@ -158,7 +171,7 @@ public class Main
 		// Insurance be like
 		if ((DealerHasAce) && ((int) (Math.floor(betChips / 2)) + betChips) <= totalChips) {
 			betInsuranceChips = (int) (Math.floor(betChips / 2));
-			dealerHasAce();
+			dealerHasAce(input);
 		}
 		if ((totalDealer == 21) || (totalPlayer == 21)){
 			HasBlackjack();
@@ -178,7 +191,7 @@ public class Main
 		dealerDrawCard();
 		dealerDrawCard();
 		System.out.println("");
-		System.out.print("The Player draws: ");
+		System.out.print(name + " draws: ");
 		playerDrawCard();
 		playerDrawCard();
 		System.out.println("Total: " + totalPlayer);
@@ -274,7 +287,7 @@ public class Main
 
 	public void HasBlackjack(){
 		if (totalPlayer == 21) {
-			System.out.println("The Player has Blackjack!");
+			System.out.println(name + " has Blackjack!");
 		}
 		dealerPlay();
 		if (totalDealer == 21) {
@@ -324,8 +337,11 @@ public class Main
 					System.out.println("Do you Hit (H) or Stand (S)?");
 				}
 				do { 
-					//inputChar =  getCharacter(input);
-					inputChar = input.next().charAt(0);
+					try {
+						inputChar = input.next().charAt(0);
+					} catch (Exception e) {
+						System.out.println("ERROR: Please type a valid letter");
+					}
 					if ((inputChar == 'H') || (inputChar == 'S') || ((inputChar == 'D') && (betChips * 2 <= totalChips) && (firstAction))) {
 						firstAction = false;
 						isValid = true;
@@ -429,8 +445,7 @@ public class Main
 		System.out.println("You lost " + betChips + " chips");
 	}
 
-	public void dealerHasAce(){
-		Scanner input = new Scanner(System.in);
+	public void dealerHasAce(Scanner input){
 		System.out.println("The Dealer has an Ace, do you wish to buy insurance? (Y/N) (" + betInsuranceChips + " chips)");
 		do { 
 				inputChar = input.next().charAt(0);
