@@ -11,14 +11,12 @@ public class Main
 	int totalPlayer;
 	int totalDealer;
 	int totalDealerAces;
-	int totalDealerHasInsurance;
 	int totalDealerCards;
 	boolean firstAction;
 	boolean hasInsurance;
 	boolean DealerHasAce;
 	String activeDealerCards;
 	// Used in "createDeck"
-	int createSuit;
 	int createCardNumber;
 	// Lists used in "createDeck"
 	ArrayList<String> suitDeck;
@@ -41,41 +39,43 @@ public class Main
 	public static void main(String[] args){
 		System.out.println("----------------------");
 		System.out.println("Welcome! This is CISC-Black-Jack");
-		Scanner input = new Scanner(System.in);
-		/*
+		try (Scanner input = new Scanner(System.in)) {
+			// Ask for the user's name
+			System.out.print("Enter your name: ");
+			String name = input.nextLine();
+			System.out.println("");
+			System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
+			System.out.println("Type 'Y' for yes and 'N' for No");
+			String answer = input.nextLine();
+			// Should probably use case stuff
+			if (answer.equals("Y") || answer.equals("y")) {
+				System.out.println("Yay!");
+			}
+			else {
+				System.out.println("Aw man :(");
+				System.out.println("Quitting game...");
+				System.exit(0);
+			}
+		
 
-        // Ask for the user's name
-        System.out.print("Enter your name: ");
-        String name = input.nextLine();
-        System.out.println("");
-		System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
-		System.out.println("Type 'Y' for yes and 'N' for No");
-		String answer = input.nextLine();
-		// Should probably use case stuff
-		if (answer.equals("Y")) {
-			System.out.println("Yay!");
-		}
-		else {
-			System.out.println("Aw man :(");
-		}
-		*/
-		// stops
-		System.out.println("Starting Game");
-		// GAME LOOP
-		Main MainInstance = new Main();
-		while (true) {
-		System.out.println("----------------------");
-		MainInstance.reset();
-		MainInstance.newRound();
-		if (MainInstance.checkLose()) {
-			System.out.println("Game Over! You ran out of chips");
-			System.exit(0);
-		}
-		if (MainInstance.checkWin()) {
-			System.out.println("No way! You have over 1000 chips! You win!!!");
-			System.exit(0);
-		}
-		System.out.println("Next round!");
+      		// stops
+			System.out.println("Starting Game");
+			// GAME LOOP
+			Main MainInstance = new Main();
+			while (true) {
+			System.out.println("----------------------");
+			MainInstance.reset();
+			MainInstance.newRound(input);
+			if (MainInstance.checkLose()) {
+				System.out.println("Game Over! You ran out of chips");
+				System.exit(0);
+			}
+			if (MainInstance.checkWin()) {
+				System.out.println("No way! You have over 1000 chips! You win!!!");
+				System.exit(0);
+			}
+			System.out.println("Next round!");
+			}
 		}
 	}
 
@@ -114,13 +114,12 @@ public class Main
 	public void createDeck(){
 		suitDeck = new ArrayList<>();
 		numberDeck = new ArrayList<>();
-		createSuit = 1;
-		for (int a = 0; a < 4; a++) {
+		for (int createSuit = 0; createSuit < 4; createSuit++) {
 			createCardNumber = 1;
 			for (int b = 2; b <= 14; b++) {
 			createCardNumber = createCardNumber++;
 			numberDeck.add(b);
-			suitDeck.add("" + finalSuits.charAt(a));
+			suitDeck.add("" + finalSuits.charAt(createSuit));
 			}
 		}
 		shuffleDeck();
@@ -143,12 +142,17 @@ public class Main
 		}
 	}
 
-	public void newRound(){
-		Scanner input = new Scanner(System.in);
-		System.out.println("How many chips are you betting? You have: " + totalChips + " chips");
-		do { 
-			inputInt = input.nextInt();
-		} while ((0 > inputInt) || (inputInt > totalChips));
+	public void newRound(Scanner input)
+	{
+			System.out.println("How many chips are you betting? You have: " + totalChips + " chips");
+			do { 
+				try {
+					inputInt = input.nextInt();
+				} catch (Exception e) {
+					System.out.println("ERROR: Please type a number");
+					input.next();
+				}
+			} while ((0 >= inputInt) || (inputInt > totalChips));
 		System.out.println("");
 		intialDraw();
 		// Insurance be like
@@ -160,9 +164,9 @@ public class Main
 			HasBlackjack();
 		}
 		else {
-			startRound();
+			startRound(input);
 		}
-		}
+	}
 	
 	public void intialDraw(){
 		betChips = inputInt;
@@ -309,22 +313,31 @@ public class Main
 		}
 	}
 
-	public void startRound(){
-		Scanner input = new Scanner(System.in);
+	public void startRound(Scanner input)
+	{
+		boolean isValid;
 		do { 
-			if ((betChips * 2 <= totalChips) && (firstAction)) {
-				System.out.println("Do you Hit (H), Stand (S), or Double Down (D)?");
-				firstAction = false;
-			}
-			else {
-				System.out.println("Do you Hit (H) or Stand (S)?");
-			}
-			do { 
-				inputChar = input.next().charAt(0);
-			} while (!((inputChar == 'H') || (inputChar == 'S') || ((inputChar == 'D') && (betChips * 2 <= totalChips))));
-			System.out.println("");
-			checkHit();
-		} while (!((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer)));
+				if ((betChips * 2 <= totalChips) && (firstAction)) {
+					System.out.println("Do you Hit (H), Stand (S), or Double Down (D)?");
+				}  
+				else {
+					System.out.println("Do you Hit (H) or Stand (S)?");
+				}
+				do { 
+					//inputChar =  getCharacter(input);
+					inputChar = input.next().charAt(0);
+					if ((inputChar == 'H') || (inputChar == 'S') || ((inputChar == 'D') && (betChips * 2 <= totalChips) && (firstAction))) {
+						firstAction = false;
+						isValid = true;
+					}
+					else {
+						System.out.println("ERROR: Please type a valid letter");
+						isValid = false;
+					}
+				} while (!isValid);
+				System.out.println("");
+				checkHit();
+			} while (!((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer)));
 		endRound();
 	}
 
