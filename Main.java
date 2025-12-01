@@ -188,10 +188,18 @@ public class Main
 		}
 		System.out.println("You bet " + inputInt);
 		System.out.print("The Dealer draws: ");
+		/*
+		shuffledNumberDeck.set(0, 14);
+		shuffledNumberDeck.set(1, 10);
+		*/
 		dealerDrawCard();
 		dealerDrawCard();
 		System.out.println("");
 		System.out.print(name + " draws: ");
+		/*
+		shuffledNumberDeck.set(0, 14);
+		shuffledNumberDeck.set(1, 10);
+		*/
 		playerDrawCard();
 		playerDrawCard();
 		System.out.println("Total: " + totalPlayer);
@@ -296,34 +304,33 @@ public class Main
 			}
 			else {
 				System.out.println("The Dealer has Blackjack!");
-			}			
-			if ((totalDealer == 21) && (totalPlayer == 21)) {
-				System.out.println("Stand-off. Both Player and Dealer hava a total of 21.");
-				if (hasInsurance) {
-					System.out.println("Insurance! You won " + betInsuranceChips + " chips");
-					totalChips = totalChips + betInsuranceChips;
-				}
-				else {
-				System.out.println("No change");
-				}
+			}	
+		}		
+		if ((totalDealer == 21) && (totalPlayer == 21)) {
+			System.out.println("Stand-off. Both Player and Dealer hava a total of 21.");
+			if (hasInsurance) {
+				System.out.println("Insurance! You won " + betInsuranceChips + " chips");
+				totalChips = totalChips + betInsuranceChips;
 			}
 			else {
-				if (totalDealer == 21) {
-					totalChips = totalChips - betChips;
-					System.out.println("You lost " + betChips + " chips");
-					if (hasInsurance) {
-						totalChips = totalChips + betInsuranceChips * 2;
-						System.out.println("Insurance! You won back your " + betInsuranceChips + " chips");
+			System.out.println("No change");
+			}
+		}
+		else {
+			if (totalDealer == 21) {
+				totalChips = totalChips - betChips;
+				System.out.println("You lost " + betChips + " chips");
+				if (hasInsurance) {
+					totalChips = totalChips + betInsuranceChips * 2;
+					System.out.println("Insurance! You won back your " + betInsuranceChips + " chips");
 					}
 				}
 				else {
 					totalChips = totalChips + betChips + (int) ((Math.floor(betChips / 2)));
 					System.out.println("Win! You had " + totalPlayer + " while the dealer had " + totalDealer);
-					System.out.println("You won " + betChips + " chips and " + (Math.floor((betChips / 2))) + " bonus chips for getting Blackjack");
+					System.out.println("You won " + betChips + " chips and " + (Math.round(Math.floor((betChips / 2)))) + " bonus chips for getting Blackjack");
 				}
 			}
-
-		}
 	}
 
 	public void startRound(Scanner input)
