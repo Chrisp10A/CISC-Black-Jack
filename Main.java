@@ -69,7 +69,7 @@ public class Main
 
 	public void introForGame(Scanner input) {
 		// Ask for name and asks for game
-		System.out.print("Enter your name: ");
+		System.out.print("Enter your name (leave blank for default name): ");
 		name = input.nextLine();
 		System.out.println("");
 		if (name.equals("")) {
@@ -79,7 +79,7 @@ public class Main
 		else {
 			System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
 		}
-		System.out.print("Type 'Y' for yes: ");
+		System.out.print("Type 'Y' for yes (type anything else for no): ");
 		String answer = input.nextLine();
 		if (answer.equals("Y") || answer.equals("y") || answer.equals("yes") || answer.equals("Yes")) {
 			System.out.println("Ok!");
@@ -168,6 +168,11 @@ public class Main
 			do { 
 				try {
 					inputInt = input.nextInt();
+					if (inputInt > totalChips) {
+                    System.out.println("ERROR: You do not have enough chips");
+					} else if (inputInt <= 0) {
+						System.out.println("ERROR: Please enter a positive integer");
+					}
 				} catch (Exception e) {
 					System.out.println("ERROR: Please type a number");
 					input.next();
@@ -372,6 +377,7 @@ public class Main
 				do { 
 					try {
 						inputChar = input.next().charAt(0);
+						inputChar = Character.toUpperCase(inputChar);
 					} catch (Exception e) {
 						System.out.println("ERROR: Please type a valid letter");
 					}
@@ -500,6 +506,7 @@ public class Main
 		System.out.println("The Dealer has an Ace, do you wish to buy insurance? (Y/N) (" + betInsuranceChips + " chips)");
 		do { 
 				inputChar = input.next().charAt(0);
+				inputChar = Character.toUpperCase(inputChar);
 			} while (!((inputChar == 'Y') || (inputChar == 'N')));
 		if (inputChar == 'Y') {
 			// If the dealer has 21 sets the boolean true for bought insurance for later
