@@ -41,7 +41,7 @@ public class Main
                         Chips.HasBlackjack(GameController.totalDealer, GameController.totalDealer, GameController.name, GameController.hasInsurance);
                     }
                     else {
-                        GameController.startRound(input);
+                        MainInstance.startRound(input, Chips.betChips, Chips.totalChips, GameController.totalPlayer);
                     }
                 }
                 if (Chips.checkLose()) {
@@ -92,7 +92,7 @@ public class Main
     }
 
 
-    public void startRound(Scanner input, int betChips, int totalChips)
+    public void startRound(Scanner input, int betChips, int totalChips, int totalPlayer)
     {
         // Local Variable
         Char inputChar = 0;
