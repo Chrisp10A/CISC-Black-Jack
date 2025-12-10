@@ -14,7 +14,6 @@ public class GameController {
     int totalDealer;
     int totalDealerAces;
     int totalDealerCards;
-    boolean firstAction;
     boolean hasInsurance;
     boolean DealerHasAce;
     String activeDealerCards;
@@ -51,6 +50,7 @@ public class GameController {
             System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
         }
         System.out.print("Type 'Y' for yes (type anything else for no): ");
+        // Todo: Use try-catch also 
         String answer = input.nextLine();
         if (answer.equals("Y") || answer.equals("y") || answer.equals("yes") || answer.equals("Yes")) {
             System.out.println("Ok!");
@@ -69,13 +69,10 @@ public class GameController {
         totalPlayer = 0;
         totalDealer = 0;
         totalDealerAces = 0;
-        firstAction = true;
         hasInsurance = false;
         DealerHasAce = false;
         totalDealerCards = 0;
         activeDealerCards = "";
-        inputInt = 0;
-        inputChar = 0;
         createDeck();
     }
 
@@ -114,7 +111,7 @@ public class GameController {
         }
     }
 
-    public void intialDraw(int betChips, int totalChips, String inputInt){
+    public void intialDraw(){
         // Draws two cards for the Dealer and Player
         System.out.print("The Dealer draws: ");
         dealerDrawCard();
@@ -124,13 +121,6 @@ public class GameController {
         playerDrawCard();
         playerDrawCard();
         System.out.println("Total: " + totalPlayer);
-    }
-    public void printBet() {
-        betChips = inputInt;
-        if (totalChips == betChips) {
-            System.out.print("YOU GO ALL IN! ");
-        }
-        System.out.println("You bet " + inputInt);
     }
 
     public void dealerDrawCard(){
@@ -233,5 +223,32 @@ public class GameController {
         // Remove card from both lists
         shuffledNumberDeck.remove(0);
         shuffledSuitDeck.remove(0);
+    }
+
+    public boolean checkHasBlackjack() {
+        // If either Dealer or Player draws Blackjack (Ace + face card or 10)
+        if ((totalDealer == 21) || (totalPlayer == 21)){
+            return (true);
+        }
+        else {
+            return (false);
+        }
+    }
+
+    public void printIfPlayerHasBlackjack() {
+        // Check if Player has Blackjack
+        if (totalPlayer == 21) {
+            System.out.println(name + " has Blackjack!");
+        }
+    }
+
+    public void dealerPlay(){
+        // Dealer hits until obove 17 in total value
+        System.out.println("The Dealer has " + activeDealerCards + " Total: " + totalDealer);
+        while (totalDealer < 17) {
+            System.out.print("The Dealer draws: ");
+            dealerDrawCard();
+            System.out.println("Total: " + totalDealer);
+        }
     }
 }
