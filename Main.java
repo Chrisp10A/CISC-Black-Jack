@@ -1,6 +1,5 @@
 
 // It's in the debug menu
-import java.security.PublicKey;
 import java.util.*;
 public class Main
 {
@@ -41,7 +40,8 @@ public class Main
                         Chips.HasBlackjack(GameController.totalDealer, GameController.totalDealer, GameController.name, GameController.hasInsurance);
                     }
                     else {
-                        MainInstance.startRound(input, Chips.betChips, Chips.totalChips, GameController.totalPlayer);
+                        // Will fix later
+                        //MainInstance.startRound(input, Chips.betChips, Chips.totalChips, GameController.totalPlayer);
                     }
                 }
                 if (Chips.checkLose()) {
@@ -79,7 +79,7 @@ public class Main
                 } else if (inputInt < 0) {
                     System.out.println("ERROR: Please enter a positive integer");
                 } else if (inputInt == 0) {
-                    endGame();
+                    //endGame();
                 }
             } catch (Exception e) {
                 System.out.println("ERROR: Please type a number");
@@ -91,7 +91,7 @@ public class Main
         System.out.println("Round " + (rounds) + ":");
     }
 
-
+/* 
     public void startRound(Scanner input, int betChips, int totalChips, int totalPlayer)
     {
         // Local Variable
@@ -241,4 +241,5 @@ public class Main
         System.out.println("Thanks for playing! :)");
         System.exit(0);
     }
+        */
 }

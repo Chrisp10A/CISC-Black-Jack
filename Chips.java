@@ -52,7 +52,7 @@ public class Chips {
         System.out.println("You bet " + inputInt);
     }
 
-    public boolean checkDealerHasAce(boolean DelaerHasAce) {
+    public boolean checkDealerHasAce(boolean DealerHasAce) {
         // If the Player has enough chips and Dealer has an ace (insurance)
         if ((DealerHasAce) && ((int) (Math.floor(betChips / 2)) + betChips) <= totalChips) {
             betInsuranceChips = (int) (Math.floor(betChips / 2));
