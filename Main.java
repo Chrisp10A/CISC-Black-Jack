@@ -74,8 +74,10 @@ public class Main
                         if (MainInstance.checkBusted(GameController.totalPlayer)) {
                         Chips.loseBusted(GameController.totalPlayer);
                         }
+                        else {
                         GameController.dealerPlay();
                         Chips.endResult(GameController.totalPlayer, GameController.totalDealer);
+                        }
                     }
                 }
                 if (Chips.checkLose()) {
