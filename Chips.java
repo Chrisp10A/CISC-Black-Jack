@@ -56,10 +56,10 @@ public class Chips {
         // If the Player has enough chips and Dealer has an ace (insurance)
         if ((DealerHasAce) && ((int) (Math.floor(betChips / 2)) + betChips) <= totalChips) {
             betInsuranceChips = (int) (Math.floor(betChips / 2));
-            return (false);
+            return (true);
         }
         else {
-            return (true);
+            return (false);
         }
     }
 
