@@ -130,4 +130,74 @@ public class Chips {
         System.out.println("Double Down! Bet raised to " + (betChips));
         hit();
     }
+
+    public void endRound(int totalPlayer, int totalDealer){
+        // In chips class because other methods change chips
+        // Could probably use a case statement here
+        // If player busted
+        // Prints total value of player
+        System.out.print("Stand Total: " + (totalPlayer));
+        // Adds a '!' if exactly 21
+        if (totalPlayer == 21) {
+            System.out.println("!");
+        }
+        else {
+            System.out.println("");
+        }
+        }
+
+    public void endResult(int totalPlayer, int totalDealer) {
+        // If Dealer busted
+        if (21 < totalDealer) {
+            winRound(totalPlayer, totalDealer);
+        }
+        else {
+            // If Dealer and Player tied
+            if (totalDealer == totalPlayer) {
+                tieRound(totalPlayer);
+            }
+            else {
+                // Check if Player is higher than Dealer, if yes then win
+                if (totalDealer < totalPlayer) {
+                    winRound(totalPlayer, totalDealer);
+                }
+                else {
+                    loseRound(totalPlayer, totalDealer);
+                }
+            }
+        }
+    }
+
+    public void winRound(int totalPlayer, int totalDealer){
+        // Prints win text and increases chips by amount bet, also accounts for if the Dealer busted instead comparing
+        totalChips = totalChips + betChips;
+        if (21 < totalDealer) {
+            System.out.println("Busted " + totalDealer + " is over 21.");
+            System.out.println("Win! You had " + totalPlayer + " while the Dealer busted!");
+        }
+        else {
+            System.out.println("Win! You had " + totalPlayer + " while the dealer had " + totalDealer);
+        }
+        System.out.println("You won " + betChips + " chips");
+    }
+    
+    public void loseBusted(int totalPlayer){
+        // Prints lose text on screen and decreases chips by amount bet
+        System.out.println("Busted. " + totalPlayer + " is over 21");
+        totalChips = totalChips - betChips;
+        System.out.println("You lost " + betChips + " chips");
+    }
+
+    public void tieRound(int totalPlayer){
+        // Prints text if tied
+        System.out.println("Stand-off. Both dealer and player had " + totalPlayer);
+        System.out.println("No change");
+    }
+
+    public void loseRound(int totalPlayer, int totalDealer){
+        // Prints lose text on screen, decreases chips by amount bet, and prints both values
+        System.out.println("Loss. You had " + totalPlayer + " while the dealer had " + totalDealer);
+        totalChips = totalChips - betChips;
+        System.out.println("You lost " + betChips + " chips");
+    }
 }

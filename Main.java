@@ -25,6 +25,11 @@ public class Main
         return (inputChar == 'D');
     }
 
+    public boolean checkBusted(int totalPlayer)
+    {
+        return (totalPlayer > 21);
+    }
+
     public static void main(String[] args){
         System.out.println("----------------------");
         System.out.println("Welcome! This is CISC-Black-Jack");
@@ -57,7 +62,6 @@ public class Main
                         Chips.HasBlackjack(GameController.totalDealer, GameController.totalDealer, GameController.name, GameController.hasInsurance);
                     }
                     else {
-                        // Will fix later
                         do {
                         MainInstance.startRound(input, Chips.betChips, Chips.totalChips, GameController.totalPlayer);
                         if (MainInstance.checkDoubleDown()) {
@@ -67,7 +71,11 @@ public class Main
                             GameController.hit();
                         }
                         } while (MainInstance.checkRoundExitConditions(GameController.totalPlayer));
-                        // endRound();
+                        if (MainInstance.checkBusted(GameController.totalPlayer)) {
+                        Chips.loseBusted(GameController.totalPlayer);
+                        }
+                        GameController.dealerPlay();
+                        Chips.endResult(GameController.totalPlayer, GameController.totalDealer);
                     }
                 }
                 if (Chips.checkLose()) {
@@ -152,89 +160,8 @@ public class Main
             // Adds a space for readablity
             System.out.println("");
     }
-    /* 
-    
 
-    public void endRound(){
-        // Could probably use a case statement here
-        // If player busted
-        if (totalPlayer > 21){
-            loseBusted();
-        }
-        else {
-            // Prints total value of player
-            System.out.print("Stand Total: " + (totalPlayer));
-            // Adds a '!' if exactly 21
-            if (totalPlayer == 21) {
-                System.out.println("!");
-            }
-            else {
-                System.out.println("");
-            }
-            dealerPlay();
-            // If Dealer busted
-            if (21 < totalDealer) {
-                winRound();
-            }
-            else {
-                // If Dealer and Player tied
-                if (totalDealer == totalPlayer) {
-                    tieRound();
-                }
-                else {
-                    // Check if Player is higher than Dealer, if yes then win
-                    if (totalDealer < totalPlayer) {
-                        winRound();
-                    }
-                    else {
-                        loseRound();
-                    }
-                }
-            }
-        }
-    }
-
-    public void hit(){
-        // Prints Hit! and the new total of the Player
-        System.out.print("Hit! ");
-        playerDrawCard();
-        System.out.println("Total " + totalPlayer);
-    }
-
-    public void loseBusted(){
-        // Prints lose text on screen and decreases chips by amount bet
-        System.out.println("Busted. " + totalPlayer + " is over 21");
-        totalChips = totalChips - betChips;
-        System.out.println("You lost " + betChips + " chips");
-    }
-
-    public void winRound(){
-        // Prints win text and increases chips by amount bet, also accounts for if the Dealer busted instead comparing
-        totalChips = totalChips + betChips;
-        if (21 < totalDealer) {
-            System.out.println("Busted " + totalDealer + " is over 21.");
-            System.out.println("Win! You had " + totalPlayer + " while the Dealer busted!");
-        }
-        else {
-            System.out.println("Win! You had " + totalPlayer + " while the dealer had " + totalDealer);
-        }
-        System.out.println("You won " + betChips + " chips");
-    }
-
-    public void tieRound(){
-        // Prints text if tied
-        System.out.println("Stand-off. Both dealer and player had " + totalPlayer);
-        System.out.println("No change");
-    }
-
-    public void loseRound(){
-        // Prints lose text on screen, decreases chips by amount bet, and prints both values
-        System.out.println("Loss. You had " + totalPlayer + " while the dealer had " + totalDealer);
-        totalChips = totalChips - betChips;
-        System.out.println("You lost " + betChips + " chips");
-    }
-
-    public void endGame() {
+    public void endGame(int totalChips) {
         // Ends the game, prints summary, and quits the program
         System.out.println("----------------------");
         if (rounds == 1) {
@@ -253,5 +180,4 @@ public class Main
         System.out.println("Thanks for playing! :)");
         System.exit(0);
     }
-        */
 }

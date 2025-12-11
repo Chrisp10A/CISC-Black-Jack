@@ -252,4 +252,12 @@ public class GameController {
         }
     }
 
+    public void hit(){
+        // Prints Hit! and the new total of the Player
+        System.out.print("Hit! ");
+        playerDrawCard();
+        System.out.println("Total " + totalPlayer);
+    }
+
+
 }
