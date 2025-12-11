@@ -8,6 +8,22 @@ public class Main
     // Used in "newRound"
     int inputInt;
     boolean firstAction;
+    char inputChar;
+
+    public boolean checkRoundExitConditions(int totalPlayer)
+    {
+        return !((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer));
+    }
+
+    public boolean checkHit()
+    {
+        return ((inputChar == 'D') || (inputChar == 'H'));
+    }
+
+    public boolean checkDoubleDown()
+    {
+        return (inputChar == 'D');
+    }
 
     public static void main(String[] args){
         System.out.println("----------------------");
@@ -42,7 +58,16 @@ public class Main
                     }
                     else {
                         // Will fix later
-                        //MainInstance.startRound(input, Chips.betChips, Chips.totalChips, GameController.totalPlayer);
+                        do {
+                        MainInstance.startRound(input, Chips.betChips, Chips.totalChips, GameController.totalPlayer);
+                        if (MainInstance.checkDoubleDown()) {
+                            Chips.doubleDown();
+                        }
+                        if (MainInstance.checkHit()) {
+                            GameController.hit();
+                        }
+                        } while (MainInstance.checkRoundExitConditions(GameController.totalPlayer));
+                        // endRound();
                     }
                 }
                 if (Chips.checkLose()) {
@@ -61,7 +86,7 @@ public class Main
     public void resetText() {
         inputInt = 0;
         firstAction = true;
-        char inputChar = 0;
+        inputChar = 0;
     }
 
     public void newRound(Scanner input, int totalChips)
@@ -98,9 +123,8 @@ public class Main
     public void startRound(Scanner input, int betChips, int totalChips, int totalPlayer)
     {
         // Local Variable
-        char inputChar = 0;
+        inputChar = 0;
         boolean isValid;
-        do {
             // If you can Double Down (Needs to be first time asking and have enough to bet)
             if ((betChips * 2 <= totalChips) && (firstAction)) {
                 System.out.println("Do you Hit (H), Stand (S), or Double Down (D)?");
@@ -127,10 +151,6 @@ public class Main
             } while (!isValid);
             // Adds a space for readablity
             System.out.println("");
-        //    checkHit();
-            // If action ends round
-        } while (!((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer)));
-       // endRound();
     }
     /* 
     

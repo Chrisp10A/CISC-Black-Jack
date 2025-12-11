@@ -124,4 +124,10 @@ public class Chips {
             }
         }
     }
+
+    public void doubleDown() {
+        betChips = betChips * 2;
+        System.out.println("Double Down! Bet raised to " + (betChips));
+        hit();
+    }
 }

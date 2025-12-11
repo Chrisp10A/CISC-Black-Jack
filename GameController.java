@@ -251,18 +251,5 @@ public class GameController {
             System.out.println("Total: " + totalDealer);
         }
     }
-/* 
-    public void checkHit(char inputChar){
-        // If Double Down
-        if (inputChar == 'D') {
-            betChips = betChips * 2;
-            System.out.println("Double Down! Bet raised to " + (betChips));
-            hit();
-        }
-        // If Hit
-        if (inputChar == 'H') {
-            hit();
-        }
-    }
-        */
+
 }
