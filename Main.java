@@ -25,6 +25,7 @@ public class Main
             while (true) {
                 System.out.println("----------------------");
                 GameController.reset();
+                // Reset variables in main
                 MainInstance.resetText();
                 // Maybe something with case + start game
                 MainInstance.newRound(input, Chips.getChips());
@@ -60,12 +61,13 @@ public class Main
     public void resetText() {
         inputInt = 0;
         firstAction = true;
+        char inputChar = 0;
     }
 
     public void newRound(Scanner input, int totalChips)
     {
         // Prompt user for chips
-        System.out.println("wow" + totalChips);
+        System.out.println(totalChips);
         if (rounds == 0) {
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips.");
         } else {
@@ -79,6 +81,7 @@ public class Main
                 } else if (inputInt < 0) {
                     System.out.println("ERROR: Please enter a positive integer");
                 } else if (inputInt == 0) {
+                    // Will add back once all finished
                     //endGame();
                 }
             } catch (Exception e) {
@@ -91,11 +94,11 @@ public class Main
         System.out.println("Round " + (rounds) + ":");
     }
 
-/* 
+
     public void startRound(Scanner input, int betChips, int totalChips, int totalPlayer)
     {
         // Local Variable
-        Char inputChar = 0;
+        char inputChar = 0;
         boolean isValid;
         do {
             // If you can Double Down (Needs to be first time asking and have enough to bet)
@@ -124,24 +127,13 @@ public class Main
             } while (!isValid);
             // Adds a space for readablity
             System.out.println("");
-            checkHit();
+        //    checkHit();
             // If action ends round
         } while (!((inputChar == 'S') || (inputChar == 'D') || (21 < totalPlayer)));
-        endRound();
+       // endRound();
     }
-
-    public void checkHit(){
-        // If Double Down
-        if (inputChar == 'D') {
-            betChips = betChips * 2;
-            System.out.println("Double Down! Bet raised to " + (betChips));
-            hit();
-        }
-        // If Hit
-        if (inputChar == 'H') {
-            hit();
-        }
-    }
+    /* 
+    
 
     public void endRound(){
         // Could probably use a case statement here
