@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class BlackjackGUI {
 
-    private JFrame frame;
+    private final JFrame frame;
 
     public BlackjackGUI() { //gui interface 
         frame = new JFrame("Blackjack Game");
@@ -34,8 +34,8 @@ public class BlackjackGUI {
         new BlackjackGUI();
     }
 
-{int playerChips = ChipManager.loadChips();
-System.out.println("Loaded chips: " + playerChips);}
-{ChipManager.saveChips(playerChips);
-System.out.println("Chips saved: " + playerChips);}
+    {int playerChips = ChipManager.loadChips();
+    System.out.println("Loaded chips: " + playerChips);}
+    {ChipManager.saveChips(playerChips);
+    System.out.println("Chips saved: " + playerChips);}
 }
