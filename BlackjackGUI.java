@@ -33,8 +33,9 @@ public class BlackjackGUI {
     public static void main(String[] args) {
         new BlackjackGUI();
     }
-}
+
 {int playerChips = ChipManager.loadChips();
 System.out.println("Loaded chips: " + playerChips);}
 {ChipManager.saveChips(playerChips);
 System.out.println("Chips saved: " + playerChips);}
+}
