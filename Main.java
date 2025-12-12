@@ -102,7 +102,6 @@ public class Main
     public void newRound(Scanner input, int totalChips)
     {
         // Prompt user for chips
-        System.out.println(totalChips);
         if (rounds == 0) {
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips.");
         } else {

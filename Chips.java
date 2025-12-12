@@ -4,9 +4,11 @@ public class Chips {
     int totalChips = 100;
     int betChips;
     int betInsuranceChips;
+    /*
     public Chips() {
         System.out.println("Chips!");
     }
+    */
     public int getChips() {
         return totalChips;
     }
@@ -128,7 +130,6 @@ public class Chips {
     public void doubleDown() {
         betChips = betChips * 2;
         System.out.println("Double Down! Bet raised to " + (betChips));
-        hit();
     }
 
     public void endRound(int totalPlayer, int totalDealer){
