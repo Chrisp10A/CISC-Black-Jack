@@ -28,7 +28,7 @@ A program that...
 * 
 
 # Files
-*
+Used for loading and saving games
 
 # JavaFX
 *
@@ -37,4 +37,4 @@ A program that...
 *
 
 # Multithreading
-* 
+Used to run a clock in the background
