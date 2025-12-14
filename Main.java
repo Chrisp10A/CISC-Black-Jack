@@ -110,10 +110,12 @@ public class Main
                 String ans = input.nextLine();
                 if (ans.equals("Y") || ans.equals("y") || ans.equals("yes") || ans.equals("Yes")){
                     System.out.println("Save loaded!!!");
+                    System.out.println("Chips set to" + totalChips);
                 }
                 else {
                     totalChips = 100;
                     System.out.println("Save loading aborted...");
+                    System.out.println("Chips set to" + totalChips);
                 }
             }
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips.");
