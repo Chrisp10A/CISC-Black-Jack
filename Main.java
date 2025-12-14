@@ -33,6 +33,7 @@ public class Main
     public static void main(String[] args){
         System.out.println("----------------------");
         System.out.println("Welcome! This is CISC-Black-Jack");
+        Clock2.ticktock();
         try (Scanner input = new Scanner(System.in)) {
             // Ask for the user's name + make Instances
             GameController GameController = new GameController();
