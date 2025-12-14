@@ -1,3 +1,40 @@
-# Hey guys soooo lets go make this thing!
-# Look at the document for things to do!
-# https://docs.google.com/document/d/1hmCrx4HT899aWTQ80bOHLk-TcG5r8ku0flul7DY-OuE/edit?tab=t.0
+# CISC BLACKJACK
+A program that...
+
+### MAJOR Course Topics     
+
+# Java overview, JVM, OOP concepts
+*
+
+# Variables, Types, & I/O<br>
+* 
+      
+# Control flow: `if`, `switch`, & Loops
+*
+
+# Exceptions (intro), debugging
+*
+   
+# Methods, parameters, blocks, scope
+* 
+
+# Arrays & ArrayLists
+*
+
+# Objects & classes
+*
+
+# Abstract classes & interfaces
+* 
+
+# Files
+*
+
+# JavaFX
+*
+
+# Robustness & coding standards
+*
+
+# Multithreading
+* 
