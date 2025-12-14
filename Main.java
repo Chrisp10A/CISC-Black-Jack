@@ -104,20 +104,6 @@ public class Main
     {
         // Prompt user for chips
         if (rounds == 0) {
-            totalChips = ChipManager.loadChips();
-            if (totalChips != 100) {
-                System.out.print("Save game detected do you want to load? (Y/N):");
-                String ans = input.nextLine();
-                if (ans.equals("Y") || ans.equals("y") || ans.equals("yes") || ans.equals("Yes")){
-                    System.out.println("Save loaded!!!");
-                    System.out.println("Chips set to" + totalChips);
-                }
-                else {
-                    totalChips = 100;
-                    System.out.println("Save loading aborted...");
-                    System.out.println("Chips set to" + totalChips);
-                }
-            }
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips.");
         } else {
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips. (Type '0' to cash out)");
@@ -180,7 +166,6 @@ public class Main
     public void endGame(int totalChips) {
         // Ends the game, prints summary, and quits the program
         System.out.println("----------------------");
-        ChipManager.saveChips(totalChips);
         if (rounds == 1) {
             System.out.println("You played 1 round");
         } else {
