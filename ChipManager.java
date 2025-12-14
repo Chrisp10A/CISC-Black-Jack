@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -9,22 +10,15 @@ public class ChipManager {
 
     // Load chip count if file exists, otherwise return a default value
     public static int loadChips() {
+        Scanner sc = null;
         try {
-            File file = new File(FILE_NAME);
-
-            if (!file.exists()) {
-                return 100; // default starting chips
-            }
-
-            Scanner scanner = new Scanner(file);
-            int chips = scanner.nextInt();
-            scanner.close();
-            return chips;
-
-        } catch (Exception e) {
-            System.out.println("Error loading chips: " + e.getMessage());
-            return 100; // fallback
+            sc = new Scanner(new File(FILE_NAME));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        int chips = sc.nextInt();
+        sc.close();
+        return chips;
     }
 
     // Save chip count to file

@@ -4,6 +4,7 @@ public class Chips {
     int totalChips = 100;
     int betChips;
     int betInsuranceChips;
+
     /*
     public Chips() {
         System.out.println("Chips!");

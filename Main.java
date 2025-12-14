@@ -33,7 +33,7 @@ public class Main
     public static void main(String[] args){
         System.out.println("----------------------");
         System.out.println("Welcome! This is CISC-Black-Jack");
-        Clock2.ticktock();
+
         try (Scanner input = new Scanner(System.in)) {
             // Ask for the user's name + make Instances
             GameController GameController = new GameController();
@@ -104,9 +104,22 @@ public class Main
     {
         // Prompt user for chips
         if (rounds == 0) {
+            totalChips = ChipManager.loadChips();
+            if (totalChips != 100) {
+                System.out.print("Save game detected do you want to load? (Y/N):");
+                String ans = input.nextLine();
+                if (ans.equals("Y") || ans.equals("y") || ans.equals("yes") || ans.equals("Yes")){
+                    System.out.println("Save loaded!!!");
+                }
+                else {
+                    totalChips = 100;
+                    System.out.println("Save loading aborted...");
+                }
+            }
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips.");
         } else {
             System.out.println("How many chips are you betting? You have: " + totalChips + " chips. (Type '0' to cash out)");
+
         }
         do {
             try {
@@ -116,8 +129,7 @@ public class Main
                 } else if (inputInt < 0) {
                     System.out.println("ERROR: Please enter a positive integer");
                 } else if (inputInt == 0) {
-                    // Will add back once all finished
-                    //endGame();
+                    endGame(totalChips);
                 }
             } catch (Exception e) {
                 System.out.println("ERROR: Please type a number");
@@ -166,6 +178,7 @@ public class Main
     public void endGame(int totalChips) {
         // Ends the game, prints summary, and quits the program
         System.out.println("----------------------");
+        ChipManager.saveChips(totalChips);
         if (rounds == 1) {
             System.out.println("You played 1 round");
         } else {
