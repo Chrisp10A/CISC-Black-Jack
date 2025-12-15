@@ -119,7 +119,7 @@ public class BlackJack extends Application {
                     } else {
                         // If dealer or player has Blackjack
                         if (gameController.checkHasBlackjack()) {
-                            gameController.printIfPlayerHasBlackjack(this);
+                            gameController.printIfPlayerHasBlackjack(name, this);
                             gameController.dealerPlay(this);
                             chips.HasBlackjack(gameController.totalDealer, gameController.totalPlayer, gameController.name, gameController.hasInsurance, this);
                             fullReset();

@@ -124,7 +124,7 @@ public class GameController {
         return (totalDealer == 21) || (totalPlayer == 21);
     }
 
-    public void printIfPlayerHasBlackjack(BlackJack blkj) {
+    public void printIfPlayerHasBlackjack(String name, BlackJack blkj) {
         if (totalPlayer == 21) {
             blkj.println(name + " has Blackjack!");
         }
