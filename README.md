@@ -47,7 +47,7 @@ All inputs are put into a try function incase of an exception. BlackJack.java (3
 
 # Arrays & ArrayLists
 Arrays and ArrayLists are used to list the cards and hands.
-// InfraredFire pls add stuff
+The deck is comprised of calls of the Card arrays in the class.
 
 # Objects & classes
 We use a varitey of classes such as:
@@ -58,8 +58,7 @@ public interface Chips (Chips.java)
 public class ChipsManager (ChipsManager.java)
 
 # Abstract classes & interfaces
-*
-// InfraredFire pls add stuff
+Used flexible and reusable classes like Card and Deck
 
 # Files
 Used Chips.Manager to save and load the chip count located in player_chips.txt. 
