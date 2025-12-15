@@ -20,29 +20,6 @@ public class GameController {
 
     // Current card being processed
     Card currentCard;
-    /*
-    public void introForGame(Scanner input) {
-        System.out.print("Enter your name (leave blank for default name): ");
-        name = input.nextLine();
-        System.out.println("");
-        if (name.equals("")) {
-            name = "The player";
-            System.out.println("Hello, player. Are you up for a game of Blackjack?");
-        } else {
-            System.out.println("Hello, " + name + ". Are you up for a game of Blackjack?");
-        }
-        System.out.print("Type 'Y' for yes (type anything else for no): ");
-        String answer = input.nextLine();
-        if (answer.equals("Y") || answer.equals("y") || answer.equals("yes") || answer.equals("Yes")) {
-            System.out.println("Ok!");
-        } else {
-            System.out.println("Aw man :(");
-            System.out.println("Quitting game...");
-            System.exit(0);
-        }
-    }
-
-     */
 
     public void reset() {
         totalAces = 0;
@@ -54,7 +31,6 @@ public class GameController {
         totalDealerCards = 0;
         activeDealerCards = "";
         firstAction = true;
-
         // Create new deck and shuffle it
         deck = new Deck();
         deck.shuffle();

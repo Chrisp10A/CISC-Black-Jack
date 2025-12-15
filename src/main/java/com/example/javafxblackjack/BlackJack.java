@@ -58,7 +58,7 @@ public class BlackJack extends Application {
     Button loadGameButton;
     Button saveGameButton;
     String name;
-    enum BlackJackGameState {EnterName,DoYouWantToPlay,NewRound, DealerHasAce, HasBlackjack, StartRound};
+    enum BlackJackGameState {EnterName,DoYouWantToPlay, NewRound, DealerHasAce, HasBlackjack, StartRound};
     BlackJackGameState GameState;
     GameController gameController;
     Chips chips;
@@ -192,7 +192,7 @@ public class BlackJack extends Application {
                 }
                 break;
             case BlackJackGameState.DealerHasAce:
-                inputChar = text.charAt(0);
+                    inputChar = text.charAt(0);
                     inputChar = Character.toUpperCase(inputChar);
                 if (inputChar == 'Y') {
                     // If the dealer has 21 sets the boolean true for bought insurance for later
@@ -309,9 +309,6 @@ public class BlackJack extends Application {
 
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     public void print(String text) {
         textHistory.appendText(text);
