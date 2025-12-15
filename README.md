@@ -42,8 +42,9 @@ All inputs are put into a try function incase of an exception. BlackJack.java (3
 
 
 # Methods, parameters, blocks, scope
-* This project uses mutiple methods such as
-* fullReset()
+* This project uses mutiple methods that call other methods such as
+  if (chips.checkDealerHasAce(gameController.DealerHasAce)) {
+this method calls on other classes to see if the DealerHasAce
 
 # Arrays & ArrayLists
 Arrays and ArrayLists are used to list the cards and hands.
@@ -82,7 +83,13 @@ Here is some of the code 229-245:
 <img width="563" height="406" alt="image" src="https://github.com/user-attachments/assets/93d0a8fc-ac10-44f9-9b1d-7a3b1bc8f9fe" />
 
 # Robustness & coding standards
-* We use lower camle case for all variables
+We use lower camle case for all variables. GameController.java (4-16)
+
+ <img width="268" height="286" alt="image" src="https://github.com/user-attachments/assets/bf12cae5-993c-4165-bfce-93fd0f0b74b9" />
+
+Like previously stated with use try and catch to stop exceptions. BlackJack.java (136-139)
+
+<img width="401" height="91" alt="image" src="https://github.com/user-attachments/assets/6e262db1-626f-4dcf-8a03-7fe8eb17d5a7" />
 
 # Multithreading
 Mutlithreading was used so a clock would tick independent from the rest of the code. 
