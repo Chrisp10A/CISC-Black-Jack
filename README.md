@@ -1,5 +1,5 @@
 # CISC BLACKJACK
-A program that...
+A program that plays Blackjack
 
 ### MAJOR Course Topics     
 
@@ -10,10 +10,15 @@ Classes call methods from other classes by creating an insatance
 # Variables, Types, & I/O<br>
 We have used mutiple types such as Char, Boolean, Integers, and Strings to work with data.
 Like in lines 15-32 of BlackJack.java
-doc/Screenshot 2025-12-14 173219.png
+<img width="186" height="140" alt="image" src="https://github.com/user-attachments/assets/14c3f755-16fb-4fc4-b889-acbc588fc17f" />
+
+Used Gamestate variable for which phase the game is on.
       
 # Control flow: `if`, `switch`, & Loops
 If-else statements are used for most of the logic.
+Program starts on line 262 by using @override to start formatting the GUI
+It creates instances and prints the welcome message and lastly creates the clock.
+The Gamestates 
 
 The confirm button operates on a switch statement
 
@@ -43,13 +48,26 @@ public class ChipsManager (ChipsManager.java)
 // InfraredFire pls add stuff
 
 # Files
-Used Chips.Manager to save and load the chip count located in player_chips.txt
+Used Chips.Manager to save and load the chip count located in player_chips.txt. 
+<img width="694" height="503" alt="image" src="https://github.com/user-attachments/assets/84baa353-8edc-4bb3-9458-47b6bec5ab20" />
+
 
 # JavaFX
-Used Basic GUI to create a textbox and buttons for the game
+Used Basic JavaFX GUI to create a textbox and buttons for the game.
+All code that manages the GUI is in BlackJack.java or the main class of the project. 
+The bulk of the setup is in lines 261-292
+<img width="630" height="725" alt="image" src="https://github.com/user-attachments/assets/b7414442-cebf-42c6-bede-cb0767a32685" />
+The buttons use event actions to trigger.
+The confirm button is the largest due to how the function has to change for every possible action.
+Here is some of the code 229-245:
+<img width="563" height="406" alt="image" src="https://github.com/user-attachments/assets/93d0a8fc-ac10-44f9-9b1d-7a3b1bc8f9fe" />
 
 # Robustness & coding standards
 * We use camle case
 
 # Multithreading
-Used to run a clock in the background
+Mutlithreading was used so a clock would tick independent from the rest of the code. 
+To do this we create the object clock and run a thread that updates about every second.
+Most of the clock code is in the file clock2.java:
+<img width="500" height="759" alt="image" src="https://github.com/user-attachments/assets/b61d555e-3686-4f37-b06a-f019e1d28df2" />
+
