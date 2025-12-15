@@ -5,20 +5,24 @@ A program that plays Blackjack
 
 # Java overview, JVM, OOP concepts
 The project is organized into different classes for better readabilty
-Classes call methods from other classes by creating an insatance
+<img width="138" height="215" alt="image" src="https://github.com/user-attachments/assets/c127f884-cc95-46dc-9d1e-5ab09eb7218e" />
+Classes call methods from other classes by creating an insatance.
+<img width="313" height="98" alt="image" src="https://github.com/user-attachments/assets/5c8989b0-1d59-4168-bf52-1bee36e63785" />
+
 
 # Variables, Types, & I/O<br>
 We have used mutiple types such as Char, Boolean, Integers, and Strings to work with data.
 Like in lines 15-32 of BlackJack.java
 <img width="186" height="140" alt="image" src="https://github.com/user-attachments/assets/14c3f755-16fb-4fc4-b889-acbc588fc17f" />
-
-Used Gamestate variable for which phase the game is on.
+Used enum Gamestate variable for which phase the game is on.
+<img width="933" height="24" alt="image" src="https://github.com/user-attachments/assets/634ca2b9-8b07-49c0-adc3-39ca376f3348" />
       
 # Control flow: `if`, `switch`, & Loops
-If-else statements are used for most of the logic.
-Program starts on line 262 by using @override to start formatting the GUI
-It creates instances and prints the welcome message and lastly creates the clock.
-The Gamestates 
+If-else statements are used for most of the logic. Chips.java (133-153)
+<img width="730" height="502" alt="image" src="https://github.com/user-attachments/assets/ff116eec-f9db-414f-8eca-feaeaebe0be3" />
+The Gamestates are one big case statement that occurs whenever you hit "confirm" BlackJack.java (72-93)
+<img width="769" height="504" alt="image" src="https://github.com/user-attachments/assets/a24f3228-04da-4c6c-a364-73e634ecdab2" />
+
 
 The confirm button operates on a switch statement
 
@@ -49,6 +53,7 @@ public class ChipsManager (ChipsManager.java)
 
 # Files
 Used Chips.Manager to save and load the chip count located in player_chips.txt. 
+This is done by using FileWriter and BuffredReader to edit the file directly.
 <img width="694" height="503" alt="image" src="https://github.com/user-attachments/assets/84baa353-8edc-4bb3-9458-47b6bec5ab20" />
 
 
@@ -63,7 +68,7 @@ Here is some of the code 229-245:
 <img width="563" height="406" alt="image" src="https://github.com/user-attachments/assets/93d0a8fc-ac10-44f9-9b1d-7a3b1bc8f9fe" />
 
 # Robustness & coding standards
-* We use camle case
+* We use lower camle case for all variables
 
 # Multithreading
 Mutlithreading was used so a clock would tick independent from the rest of the code. 
