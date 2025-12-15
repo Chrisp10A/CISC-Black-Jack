@@ -58,7 +58,7 @@ public class BlackJack extends Application {
     Button loadGameButton;
     Button saveGameButton;
     String name;
-    enum BlackJackGameState {EnterName,DoYouWantToPlay,ResetGame,NewRound, DealerHasAce, HasBlackjack, StartRound};
+    enum BlackJackGameState {EnterName,DoYouWantToPlay,NewRound, DealerHasAce, HasBlackjack, StartRound};
     BlackJackGameState GameState;
     GameController gameController;
     Chips chips;
@@ -72,6 +72,7 @@ public class BlackJack extends Application {
         inputArea.setText("");
         switch(GameState) {
             case  BlackJackGameState.EnterName:
+                // Asks the user for name
                 if(text == "") {
                     name = "The Player";
                     println("Hello, player. Are you up for a game of Blackjack?");
@@ -83,17 +84,19 @@ public class BlackJack extends Application {
                 GameState = BlackJackGameState.DoYouWantToPlay;
                 break;
             case  BlackJackGameState.DoYouWantToPlay:
+                // If they typed yes then reset all values and start the game
                 if (text.equals("Y") || text.equals("y") || text.equals("yes") || text.equals("Yes")) {
                     println("Ok!");
                     println("Starting Game");
-                    gameController.reset();
-                    resetTextAndPrompt();
+                    // Resets all vars and prompts user
+                    fullReset();
                     GameState = BlackJackGameState.NewRound;
 
                 } else {
                     println("Aw man :(");
                     println("Quitting game...");
                     Timer t = new Timer();
+                    // Wait 1 second
                     t.schedule(new TimerTask() {
                         @Override
                         public void run() {
@@ -103,19 +106,18 @@ public class BlackJack extends Application {
                 }
 
                 break;
-            case  BlackJackGameState.ResetGame:
-                fullReset();
-                GameState = BlackJackGameState.NewRound;
-                break;
             case BlackJackGameState.NewRound:
                 validNumber = false;
+                // Check if valid amount of chips to bet
                 newRound(text, chips.getChips());
                 if (validNumber) {
+                    // If dealer has Ace
                     if (chips.checkDealerHasAce(gameController.DealerHasAce)) {
                         chips.dealerHasAce(this);
                         GameState = BlackJackGameState.DealerHasAce;
                         break;
                     } else {
+                        // If dealer or player has Blackjack
                         if (gameController.checkHasBlackjack()) {
                             gameController.printIfPlayerHasBlackjack(this);
                             gameController.dealerPlay(this);
@@ -123,6 +125,7 @@ public class BlackJack extends Application {
                             fullReset();
                             GameState = BlackJackGameState.NewRound;
                         } else {
+                            // Start round if neither
                             setupRound();
                             GameState = BlackJackGameState.StartRound;
                         }
@@ -131,8 +134,10 @@ public class BlackJack extends Application {
                 break;
             case BlackJackGameState.StartRound:
                 try {
+                    // Take only the first letter
                     inputChar = text.charAt(0);
                     inputChar = Character.toUpperCase(inputChar);
+                    // Check if valid
                     startRound();
                     if (isValid) {
                         if (checkDoubleDown()) {
@@ -141,16 +146,20 @@ public class BlackJack extends Application {
                         if (checkHit()) {
                             gameController.hit(this);
                         }
+                        // Check if Busted/Stand/Doubledown
                         if (checkRoundExitConditions(gameController.totalPlayer)) {
+                            // If busted
                             if (checkBusted(gameController.totalPlayer)) {
                                 chips.loseBusted(gameController.totalPlayer, this);
                             } else {
+                                // Dealer play
                                 gameController.dealerPlay(this);
                                 chips.endRound(gameController.totalPlayer, gameController.totalDealer, this);
                                 chips.endResult(gameController.totalPlayer, gameController.totalDealer, this);
                             }
                             if (chips.checkLose()) {
                                 println("Game Over! You ran out of chips");
+                                // Sets chips to 100 for next game
                                 ChipsManager.save(100, this);
                                 Timer t = new Timer();
                                 t.schedule(new TimerTask() {
@@ -258,7 +267,7 @@ public class BlackJack extends Application {
         time = new Label("Time will show up here!");
 // status label
         status = new Label("Please enter your name!");
-// Input row: TextField
+// TextField
         inputArea = new TextField();
         confirmButton = new Button("Confirm");
 // Add Button
@@ -267,9 +276,9 @@ public class BlackJack extends Application {
         loadGameButton = new Button("Load Game");
         textHistory = new TextArea();
         textHistory.setEditable(false);
-// Wire up the Add button.
+// Set up Confirm button.
         confirmButton.setOnAction(this::ConfirmButtonPushed);
-// Wire up the Reset button.
+// Set up ChipsManager button.
         newGameButton.setOnAction(this::NewGameButtonPushed);
         saveGameButton.setOnAction(this::SaveGameButtonPushed);
         loadGameButton.setOnAction(this::LoadGameButtonPushed);
